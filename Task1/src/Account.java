@@ -1,87 +1,67 @@
-import java.util.Scanner;
 
-public class Account {
-	Scanner scan=new Scanner(System.in);
-	private double balance;
-	private int account_number;
-	private Client myClient ;
-		
-	public Client getMyClient() {
-		return myClient;
-	}
-	public void setMyClient(Client myClient) {
-		this.myClient = myClient;
-	}
+public class Account{
+	protected double balance;
+	protected int accountNumber;
 	
-	//empty constructor 
 	public Account() {
-		this.balance=0.0;
-		this.account_number=0;
+		balance = 0;
+		accountNumber = 1;
 	}
-	//parameterized constructor to initialize the balance
-	public Account(double d) {
-		this.balance=d;
+	public Account(double _balance) {
+		if (_balance>=0) balance = _balance;
+		else System.out.println("Invalid amount");
 	}
-	//set the balance with the given balance
-	public void set_balance(double d) {
-		this.balance=d;
+	public Account(double _balance, int _accountNumber) {
+		if (_balance<1) System.out.println("Invalid amount");
+		else this.balance = _balance;
+		if (_accountNumber<1) System.out.println("Invalid number");
+		else this.accountNumber = _accountNumber;
 	}
-	//set the account number with the given account number
-	public void set_account_number(int num) {
-		this.account_number=num;
-	}
-	//return the balance
-	public double get_balance() {
-		return this.balance;
-	}
-	//return the account number
-	public int get_account_number() {
-		return this.account_number;
-	}
-	//every class in Java is child of Object class either directly or indirectly
-	//toString is a method of class Object. we can use it to get string representation of an Object of our class
-	@Override
 	
+	public Account(int __accountNumber, double _Balanceb) {
+		this(_Balanceb,__accountNumber);
+	}
+	
+	public void setAccountBalance(double _balalance) {
+		if (_balalance<1) System.out.println("Invalid amount");
+		else balance = _balalance;
+	}
+	
+	public void setAccountNumber(int _accountNumber) {
+		if (_accountNumber<1) System.out.println("Invalid number");
+		else accountNumber = _accountNumber;
+	}
+	
+	public double getAccountBalance() {
+		return balance;
+	}
+	
+	public double getAccountNumber() {
+		return accountNumber;
+	}
+	
+	//every class in Java is child of Object class either directly or indirectly
+	//toString is a method of class Object. we can use it to get string representation of an Object
 	public String toString() {
-		//+",Client details: "+myClient
-		return String.format("Account number: "+this.account_number+", Balance: "+this.balance);
+		return "Account Balance: "+balance+", and Account number is: "+accountNumber;
 	}
-	//withdraw method returns an string that tells if the action performed successfully or not
-	public String withdraw() {
-		System.out.print("Enter the amount you would like to withdraw: ");
-		double amount=scan.nextDouble();
-		if(amount>this.balance)
-			return "No enough money to withdraw";
-		else if(amount<=0)
-			return "Invalid amount"; 
+	
+	public boolean withdraw(double _amounttoWithdraw) {
+		boolean check = false;
+		double temp = balance - _amounttoWithdraw;
+		if (temp>=0) {
+			check = false;
+			balance = temp;
+		}
 		else {
-			this.balance-=amount;
-			return "Sucessful Withdrawl";
+			//System.out.println("Sorry. no enough balance to withdraw");
+			check = true;
 		}
+		return check;
 	}
-	//deposit method returns an string that tells if the action performed successfully or not
-	public String deposit() {
-		System.out.print("Enter the amount you would like to deposit: ");
-		double amount=scan.nextDouble();
-		if(amount<=0)return "Invalid amount";
-		else {
-			this.balance+=amount;
-			return "Sucessful deposit";
-		}
-	}
-	//get_data to get the data of the account from user
-	public void get_data() {
-		System.out.print("please enter balance: ");
-		while(true) {
-			double _balance = scan.nextDouble();
-			if (_balance<0) {
-				System.out.print("Invalid amount. \nRe-enter the balance again: ");
-				continue;
-			}
-			else {
-				this.balance = _balance;
-				break;
-			}
-		}
+	
+	public void deposit(double _amounttoDeposit) {
+		if (_amounttoDeposit<1) System.out.println("Invalid amount");
+		else balance+=_amounttoDeposit;
 	}
 }

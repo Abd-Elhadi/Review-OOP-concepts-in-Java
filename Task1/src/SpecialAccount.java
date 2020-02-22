@@ -1,19 +1,30 @@
 
 public class SpecialAccount extends Account{
+	private final double OVERDRAFT_LIMIT = -1000;
 	@Override
-	//this method will allow the user to overdraft with maximum up to -1000
-	public String withdraw() {
-		System.out.print("enter the amount you would like to withdraw: ");
-		double amount=scan.nextDouble();
-		//if it exceed the allowed overdraft then the message will shown
-		if(this.get_balance()-amount<-1000)
-			return "The account is lucked until a deposit is made to bring the account up to a positive value";
-		//if a negative is given
-		else if(amount<=0)
-			return "Invalid amount"; 
+	public boolean withdraw(double _amounttoWithdraw) {
+		boolean check = false;
+		double temp = balance - _amounttoWithdraw;
+		if (temp<OVERDRAFT_LIMIT) check = false;
 		else {
-			this.set_balance(this.get_balance()-amount);
-			return "Sucessful Withdrawl";
+			this.balance = temp;
+			check = true;
 		}
+		return check;
+	}
+	
+	public SpecialAccount() {
+		super();
+	}
+	public SpecialAccount(double _balance) {
+		if (_balance>=-1000) this.balance = _balance;
+		else System.out.println("Invalid amount");
+	}
+	public SpecialAccount(double _balance, int _accountNumber) {
+		super(_balance,_accountNumber);
+	}
+	
+	public SpecialAccount(int _accountNumber, double _balance) {
+		super(_balance,_accountNumber);
 	}
 }
