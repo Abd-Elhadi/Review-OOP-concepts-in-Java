@@ -1,67 +1,140 @@
+import java.util.Scanner;
+/**
+ * the main target is to implement a bank system
+ *  this class will implement a Account class to represent the bank’s Account
+ * @author Omar Hany (20180184)
+ * 		   Abd Elhadi Omar (20180373)
+ *         Sherif Hisham (20180134)
+ */
 
-public class Account{
-	protected double balance;
-	protected int accountNumber;
+public class Account {
+	Scanner scan=new Scanner(System.in);
+	private double balance;
+	private int accountNumber;
+	private Client myClient ;
+	/**
+	 * Declared balance of type double, accountNumber of type integer and myClient instance of the Class client
+	 * which is the attributes each instance of the class Account should have
+	 * 
+	 */
+	/**
+	 * 
+	 * @return
+	 */
+	public Client getMyClient() {
+		return myClient;
+	}
+	/**
+	 * 
+	 * @param myClient
+	 */
+	public void setMyClient(Client myClient) {
+		this.myClient = myClient;
+	}
 	
+	/**
+	 * empty constructor
+	 */
 	public Account() {
-		balance = 0;
-		accountNumber = 1;
+		this.balance=0.0;
+		this.accountNumber=0;
 	}
-	public Account(double _balance) {
-		if (_balance>=0) balance = _balance;
-		else System.out.println("Invalid amount");
+
+	/**
+	 * parameterized constructor to initialize the balance
+	 * @param d
+	 */
+	public Account(double d) {
+		this.balance=d;
 	}
-	public Account(double _balance, int _accountNumber) {
-		if (_balance<1) System.out.println("Invalid amount");
-		else this.balance = _balance;
-		if (_accountNumber<1) System.out.println("Invalid number");
-		else this.accountNumber = _accountNumber;
+	/**
+	 * set the balance with the given balance
+	 * @param d
+	 */
+	public void setBalance(double d) {
+		this.balance=d;
 	}
-	
-	public Account(int __accountNumber, double _Balanceb) {
-		this(_Balanceb,__accountNumber);
-	}
-	
-	public void setAccountBalance(double _balalance) {
-		if (_balalance<1) System.out.println("Invalid amount");
-		else balance = _balalance;
-	}
-	
+	/*
+	 * set the account number with the given account number
+	 * @param _accountNumber
+	 */
 	public void setAccountNumber(int _accountNumber) {
-		if (_accountNumber<1) System.out.println("Invalid number");
-		else accountNumber = _accountNumber;
+		this.accountNumber=_accountNumber;
+	}
+	/**
+	 * return the balance
+	 * @return
+	 */
+	public double getBalance() {
+		return this.balance;
 	}
 	
-	public double getAccountBalance() {
-		return balance;
+	/**
+	 * return the account number
+	 * @return
+	 */
+	/**
+	 * return account number
+	 * @return
+	 */
+	public int getAccountNumber() {
+		return this.accountNumber;
 	}
-	
-	public double getAccountNumber() {
-		return accountNumber;
-	}
-	
-	//every class in Java is child of Object class either directly or indirectly
-	//toString is a method of class Object. we can use it to get string representation of an Object
+	/**
+	 * every class in Java is child of Object class either directly or indirectly
+	 * toString is a method of class Object. 
+	 * we can use it to get string representation of an Object of our class
+	 * @return
+	 */
+	@Override
 	public String toString() {
-		return "Account Balance: "+balance+", and Account number is: "+accountNumber;
+		//+",Client details: "+myClient
+		return String.format("Account number: "+this.accountNumber+", Balance: "+this.balance);
 	}
-	
-	public boolean withdraw(double _amounttoWithdraw) {
-		boolean check = false;
-		double temp = balance - _amounttoWithdraw;
-		if (temp>=0) {
-			check = false;
-			balance = temp;
-		}
+	/**
+	 * withdraw method returns an string that tells if the action performed successfully or not
+	 * @return
+	 */
+	public String withdraw() {
+		System.out.print("Enter the amount you would like to withdraw: ");
+		double amount=scan.nextDouble();
+		if(amount>this.balance)
+			return "No enough money to withdraw";
+		else if(amount<=0)
+			return "Invalid amount"; 
 		else {
-			//System.out.println("Sorry. no enough balance to withdraw");
-			check = true;
+			this.balance-=amount;
+			return "Sucessful Withdrawl";
 		}
-		return check;
 	}
-	
-	public void deposit(double _amounttoDeposit) {
-		if (_amounttoDeposit<1) System.out.println("Invalid amount");
-		else balance+=_amounttoDeposit;
+	/**
+	 * deposit method returns an string that tells if the action performed successfully or not
+	 * @return
+	 */
+	public String deposit() {
+		System.out.print("Enter the amount you would like to deposit: ");
+		double amount=scan.nextDouble();
+		if(amount<=0)return "Invalid amount";
+		else {
+			this.balance+=amount;
+			return "Sucessful deposit";
+		}
+	}
+	/**
+	 * getData to get the data of the account from user
+	 */
+	public void getData() {
+		System.out.print("please enter balance: ");
+		while(true) {
+			double _balance = scan.nextDouble();
+			if (_balance<0) {
+				System.out.print("Invalid amount. \nRe-enter the balance again: ");
+				continue;
+			}
+			else {
+				this.balance = _balance;
+				break;
+			}
+		}
 	}
 }

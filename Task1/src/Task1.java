@@ -1,13 +1,25 @@
 import java.util.Scanner;
-
+/**
+ * This class will maintain a bank and allow the user to deal with it.
+ *  @author Omar Hany (20180184)
+ * 		   Abd Elhadi Omar (20180373)
+ *         Sherif Hisham (20180134)
+ */
 public class Task1 {
+	/**
+	 * Declared an instance of Bank with a default parameters
+	 * and an instance of Scanner class to use it to get input from the user
+	 */
 	static Bank bank=new Bank("Default Name","Default Address","0100");
 	static Scanner scan=new Scanner(System.in);
-	//this is the interface that represents the relationship between the classes
-	public static void Display_Menu(){
+	/**
+	 *  displayMenu method is the interface of the program
+	 *  that will allows the user to choose his options
+	*/
+	public static void displayMenu(){
 		System.out.println("Welcome to the banking system");
 		
-		bank.get_data();//get the name, address and the phone number of the bank
+		bank.getData();//get the name, address and the phone number of the bank
 		//while the user wants to perform an action with the bank
 		//then the loop will be repeated
 		while(true) {
@@ -21,10 +33,10 @@ public class Task1 {
 			choice=scan.next();
 			if(choice.equalsIgnoreCase("1")) {
 				//Add_Client is a method used to add a client with its attributes to the system
-				bank.Add_Client();
+				bank.addClient();
 			}
 			else if(choice.equalsIgnoreCase("2")) {
-				bank.Display();
+				bank.displayAllClients();
 				if (bank.isEmpty()) {
 					continue;
 				}
@@ -61,7 +73,7 @@ public class Task1 {
 				}
 			}
 			else if(choice.equalsIgnoreCase("3")){
-				bank.Display_Acc();
+				bank.displayAllAccounts();
 			}
 			else if(choice.equals("4")) {
 				System.exit(0);
@@ -72,6 +84,11 @@ public class Task1 {
 		}
 	}
 	public static void main(String[] args) {
-		Display_Menu();
+		/**
+		 * This is the main method 
+		 * which is very important for
+		 * execution for java program
+		 */
+		displayMenu();
 	}
 }
